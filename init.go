@@ -84,19 +84,6 @@ func abort() {
 	timeabort = time.Now()
 }
 
-func getArg() string {
-
-	args := os.Args
-	if len(os.Args) <= 1 {
-		fmt.Println("\033[0;31m not enoght args")
-		fmt.Println("\033[37m try :\n\t  \033[33m <app-name> <arg>")
-		fmt.Println("\033[37m for example:\n\t \033[33m  ./botline dir-name")
-		fmt.Println("\033[37m or\n\t \033[33m go run *go dir-name", "")
-		os.Exit(0)
-	}
-	return args[1]
-}
-
 var (
 	Whitelist        = []string{}
 	SetHelper        = &oop.Helper{}
@@ -634,6 +621,20 @@ var (
 		"remote":       "'%s%s:'\n\nthe right number\nSee group number with command groups.\nExample:\n  remote: 2 gmember.\nund send command.",
 	}
 )
+
+func getArg() string {
+
+	args := os.Args
+	if len(os.Args) <= 1 {
+		fmt.Println("\033[0;31m not enoght args")
+		fmt.Println("\033[37m try :\n\t  \033[33m <app-name> <arg>")
+		fmt.Println("\033[37m for example:\n\t \033[33m  ./botline dir-name")
+		fmt.Println("\033[37m or\n\t \033[33m go run *go dir-name", "")
+		fmt.Println()
+		os.Exit(0)
+	}
+	return args[1]
+}
 
 func GetIP() net.IP {
 	conn, err := net.Dial("udp", "8.8.8.8:80")
