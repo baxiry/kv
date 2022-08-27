@@ -27,7 +27,7 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/bashery/linethrift"
+	"botline/linethrift"
 )
 
 type TMoreCompactProtocol struct {

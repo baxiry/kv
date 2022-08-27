@@ -8,7 +8,7 @@ import(
 	"context"
 	"reflect"
 	"fmt"
-	"github.com/bashery/botline/thriftjos"
+	"botline/thriftjos"
 )
 
 // (needed to ensure safety because of naive import list construction.)

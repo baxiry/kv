@@ -26,14 +26,15 @@ import (
 
 	"golang.org/x/net/http2"
 
-	"github.com/bashery/botline/channel"
-	"github.com/bashery/botline/hashmap"
-	"github.com/bashery/botline/modcompact"
+	"botline/channel"
+	"botline/hashmap"
+	"botline/modcompact"
 
-	"github.com/bashery/thrift"
+	"botline/thrift"
+
 	"github.com/tidwall/gjson"
 
-	talkservice "github.com/bashery/linethrift"
+	talkservice "botline/linethrift"
 
 	"github.com/imroc/req"
 )

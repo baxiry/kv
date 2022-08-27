@@ -9,7 +9,7 @@ import (
 	"errors"
 	"fmt"
 	"time"
-	"github.com/bashery/thrift"
+	"botline/thrift"
 )
 
 // (needed to ensure safety because of naive import list construction.)
