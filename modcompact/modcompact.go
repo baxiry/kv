@@ -27,7 +27,7 @@ import (
 	"fmt"
 	"strconv"
 
-	"botline/linethrift"
+	"bline/linethrift"
 )
 
 type TMoreCompactProtocol struct {

@@ -9,7 +9,7 @@ import (
 	"errors"
 	"fmt"
 	"time"
-	"botline/thrift"
+	"bline/thrift"
 )
 
 // (needed to ensure safety because of naive import list construction.)

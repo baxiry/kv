@@ -24,17 +24,15 @@ import (
 	"time"
 	"unicode/utf8"
 
-	"golang.org/x/net/http2"
-
-	"botline/channel"
-	"botline/hashmap"
-	"botline/modcompact"
-
-	"botline/thrift"
+	"bline/channel"
+	"bline/hashmap"
+	"bline/modcompact"
+	"bline/thrift"
 
 	"github.com/tidwall/gjson"
+	"golang.org/x/net/http2"
 
-	talkservice "botline/linethrift"
+	talkservice "bline/linethrift"
 
 	"github.com/imroc/req"
 )
@@ -558,9 +556,9 @@ func (cl *Account) SendImageWithURL(to string, url string) {
 		fmt.Println("Failed")
 		return
 	}
-	if res.StatusCode == 200 {
-	}
+	defer res.Body.Close()
 }
+
 func (s *Account) CountKick() {
 	var asu int
 	var cokss int
@@ -630,7 +628,6 @@ func IndexOf(data []string, element string) int {
 	for k, v := range data {
 		if element == v {
 			return k
-			break
 		}
 	}
 	return -1
@@ -745,6 +742,7 @@ func CheckErr(self *Account, e error, s string, t string) int {
 	}
 	return val
 }
+
 func GetCode(e error) int {
 	jos := e.Error()
 	if strings.Contains(jos, "ABUSE_BLOCK") {
@@ -814,7 +812,10 @@ func (p *Account) DownloadObjectMsg(msgid string, t ...string) (string, error) {
 	req.Header.Set("User-Agent", p.UserAgent)
 	req.Header.Set("X-Line-Application", p.AppName)
 	req.Header.Set("X-Line-Access", p.AuthToken)
-	res, _ := client.Do(req)
+	res, err := client.Do(req)
+	if err != nil {
+		println("[DownloadObjectMsg]", err)
+	}
 	defer res.Body.Close()
 	file, err := os.Create("download/" + msgid + "-dl." + tipe)
 	if err != nil {
@@ -1237,7 +1238,7 @@ func (cl *Account) UpdateCoverById(objId, tipe string) error {
 				return nil
 			}
 		}
-		return nil
+		//return nil
 	}
 
 	req, err := http.NewRequest("POST", "https://"+cl.Host+".line.naver.jp/hm/api/v1/home/cover.json", bytes.NewBuffer(js))
@@ -1354,7 +1355,7 @@ func (y *Account) UpdatePictureProfile(path, tipe string) error {
 	if err != nil {
 		return err
 	}
-	tim := fmt.Sprintf("%s%s", filepath.Base(path), time.Now().UnixNano()/1000)
+	tim := fmt.Sprintf("%s%d", filepath.Base(path), time.Now().UnixNano()/1000)
 	nama := GetMD5Hash(tim)
 
 	dataa := fmt.Sprintf(`{"name": "%s", "quality": "100", "type": "image"`, nama)
@@ -1379,11 +1380,11 @@ func (y *Account) UpdatePictureProfile(path, tipe string) error {
 				return err
 			}
 		} else {
-			defer res.Body.Close()
+			res.Body.Close()
 			return nil
 		}
 	}
-	return nil
+	//return nil
 }
 func (y *Account) UpdateCoverVideo(path string) error {
 	objId := RandomString(32)
@@ -1495,7 +1496,7 @@ func (y *Account) UpdateVideoProfile(vid string) error {
 		return err
 	}
 
-	tim := fmt.Sprintf("%s%s", filepath.Base(vid), time.Now().UnixNano()/1000)
+	tim := fmt.Sprintf("%s%d", filepath.Base(vid), time.Now().UnixNano()/1000)
 	nama := GetMD5Hash(tim)
 
 	dataa := fmt.Sprintf(`{"name": "%s", "ver": "2.0", "type": "video", "cat": "vp.mp4"}`, nama)
@@ -1601,7 +1602,7 @@ func (self *Account) GetChatListMem(groupId string) (mem []string) {
 	})
 	if len(res.Chats) != 0 {
 		ch := res.Chats[0]
-		for a, _ := range ch.Extra.GroupExtra.MemberMids {
+		for a := range ch.Extra.GroupExtra.MemberMids {
 			mem = append(mem, a)
 		}
 		return mem
@@ -1618,7 +1619,7 @@ func (self *Account) GetChatListinv(groupId string) (inv []string) {
 	})
 	if len(res.Chats) != 0 {
 		ch := res.Chats[0]
-		for a, _ := range ch.Extra.GroupExtra.InviteeMids {
+		for a := range ch.Extra.GroupExtra.InviteeMids {
 			inv = append(inv, a)
 		}
 		return inv
@@ -1632,7 +1633,7 @@ func IsPending(client *Account, to string, mid string) bool {
 		for i := range pend {
 			if pend[i] == mid {
 				return true
-				break
+				//break
 			}
 		}
 	}
@@ -1644,7 +1645,7 @@ func IsMembers(client *Account, to string, mid string) bool {
 	for i := range memlist {
 		if memlist[i] == mid {
 			return true
-			break
+			//break
 		}
 	}
 	return false
@@ -1970,10 +1971,10 @@ func (self *Account) GetChatList(groupId string) (name string, mem, inv []string
 	})
 	if len(res.Chats) != 0 {
 		ch := res.Chats[0]
-		for a, _ := range ch.Extra.GroupExtra.MemberMids {
+		for a := range ch.Extra.GroupExtra.MemberMids {
 			mem = append(mem, a)
 		}
-		for a, _ := range ch.Extra.GroupExtra.InviteeMids {
+		for a := range ch.Extra.GroupExtra.InviteeMids {
 			inv = append(inv, a)
 		}
 		return ch.ChatName, mem, inv
@@ -2047,7 +2048,7 @@ func (self *Account) UpdateProfileName(name string) (err error) {
 			return err
 		}
 	}
-	return err
+	//return err
 }
 func (p *Account) GetE2EEPublicKeys() (r []*talkservice.E2EEPublicKey, err error) {
 	r, err = p.Talk().GetE2EEPublicKeys(p.Ctx)
@@ -2223,7 +2224,7 @@ func IsFriends(client *Account, from string) bool {
 	for _, a := range friendsip {
 		if a == from {
 			return true
-			break
+			//break
 		}
 	}
 	return false
@@ -2394,7 +2395,7 @@ func (self *Account) UpdateProfileBio(bio string) (err error) {
 			return err
 		}
 	}
-	return err
+	//return err
 }
 func (cl *Account) GetContact(mid string) (*talkservice.Contact, error) {
 	return cl.Talk().GetContact(cl.Ctx, mid)
@@ -2581,7 +2582,7 @@ func (cl *Account) GetTargetKickall(to string) []string {
 	}
 	zxc := c.Chats[0].Extra.GroupExtra.MemberMids
 	var together []string
-	for k, _ := range zxc {
+	for k := range zxc {
 		if k != cl.MID {
 			together = append(together, k)
 		}
@@ -2596,7 +2597,7 @@ func (cl *Account) GetTargetCancelall(to string) []string {
 	}
 	zxc := c.Chats[0].Extra.GroupExtra.InviteeMids
 	var together []string
-	for k, _ := range zxc {
+	for k := range zxc {
 		if k != cl.MID {
 			together = append(together, k)
 		}

@@ -3,7 +3,7 @@
 package linethrift
 
 import (
-	"botline/thrift"
+	"bline/thrift"
 	"bytes"
 	"context"
 	"database/sql/driver"

@@ -1,4 +1,4 @@
-module botline
+module bline
 
 go 1.18
 
