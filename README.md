@@ -39,9 +39,19 @@ func main() {
 }
 ```
 
-### TODO 
-for more effecion will be avoid pointers as mach as posible
+### TODO:
 
-### license 
+- [x] Set
+- [x] Get
+- [x] HasKey
+- [x] Delete
+- [x] full testing.
+- [ ] auto delete by timeout.
+- [ ] benchmark.
+- [ ] avoid pointers as mach as posible for more gc effecion.
+
+### license:
+
+``` 
 use it with any license you prefer
-
+```
