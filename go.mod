@@ -1,3 +1,3 @@
-module kv
+module github.com/bashery/kv
 
-go 1.19
+go 1.18
