@@ -12,7 +12,7 @@ go get github.com/bashery/kv
 package main
 
 import (
-      "kv"
+      "github.com/bashery/kv"
 )
 
 func main() {
