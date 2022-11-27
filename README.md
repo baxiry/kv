@@ -39,5 +39,9 @@ func main() {
 }
 ```
 
-### TODO for more effecion will be avoid pointers as mach as posible
+### TODO 
+for more effecion will be avoid pointers as mach as posible
+
+### license 
+use it with any license you prefer
 
