@@ -1,2 +1,2 @@
-# key value in mimory store
-## safe concurrent key value in mimory stor
+# key value in memory store
+## safe concurrent key value in memory store
