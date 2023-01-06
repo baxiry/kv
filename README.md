@@ -46,6 +46,7 @@ func main() {
 - [x] HasKey
 - [x] Delete
 - [x] full testing.
+### not important
 - [ ] auto delete by timeout.
 - [ ] benchmark.
 - [ ] avoid pointers as mach as posible for more gc effecion.
