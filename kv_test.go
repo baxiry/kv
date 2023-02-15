@@ -6,8 +6,6 @@ import (
 	"time"
 )
 
-var m = New[int, int]()
-
 // testing Set Get HasKey & delet functions
 func Test_runAll(t *testing.T) {
 	fmt.Println("================= sync mod ===================")
@@ -39,9 +37,11 @@ func Test_runAll(t *testing.T) {
 	fmt.Println("=============== concurrent mod ==============")
 }
 
+var m = new(Map[int, int])
+
 // testing Set and HasKey function in parallel
 func Test_Set_HasKey(t *testing.T) {
-	t.Parallel()
+
 	for i := 0; i < 1000000; i++ {
 		if ok := m.HasKey(i); ok == true {
 			t.Errorf("%d key must be not exist", i)
@@ -57,8 +57,6 @@ func Test_Set_HasKey(t *testing.T) {
 
 // testing Get function in parallel
 func Test_Get(t *testing.T) {
-	t.Parallel()
-	time.Sleep(time.Millisecond * 100)
 
 	for i := 0; i < 1000000; i++ {
 		time.Sleep(time.Nanosecond * 1)
@@ -73,14 +71,11 @@ func Test_Get(t *testing.T) {
 		}
 
 	}
-
 	fmt.Println("Get func Pass ")
 }
 
 // testing Delet function in parallel
 func Test_Delete(t *testing.T) {
-	t.Parallel()
-	time.Sleep(time.Millisecond * 150)
 
 	for i := 0; i < 1000000; i++ {
 		time.Sleep(time.Nanosecond * 1)

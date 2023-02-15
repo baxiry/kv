@@ -11,6 +11,7 @@ type Map[K comparable, V any] struct {
 
 // New initialaze new map
 func New[K comparable, V any]() *Map[K, V] {
+
 	return &Map[K, V]{
 		data: sync.Map{},
 	}
@@ -25,7 +26,6 @@ func (m *Map[K, V]) Set(key K, value V) {
 func (m *Map[K, V]) Get(key K) (V, error) {
 
 	v, ok := m.data.Load(key)
-
 	if !ok {
 		return v.(V), fmt.Errorf("%v not found\n", key)
 	}
