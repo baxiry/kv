@@ -16,7 +16,7 @@ import (
 )
 
 func main() {
-      imap := kv.New[int, int]()
+      imap := new(kv.Map[int, int])
 
       imap.Set(1, 111) // insert
       imap.Set(1, 123) // update
@@ -33,7 +33,8 @@ func main() {
 
       ok = imap.HasKey(2) // false
 
-      strMap := kv.New[string, string]()
+      // new stringer Map 
+      strMap := new(kv.Map[string, string])
 
       strMap.Set("hi", "hello")
 }

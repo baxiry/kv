@@ -6,39 +6,48 @@ import (
 )
 
 type Map[K comparable, V any] struct {
-	data sync.Map
+	mut  sync.RWMutex
+	data map[K]V
 }
 
 // New initialaze new map
 func New[K comparable, V any]() *Map[K, V] {
-
 	return &Map[K, V]{
-		data: sync.Map{},
+		data: make(map[K]V, 0),
 	}
 }
 
 // Set inserts new or update old value
 func (m *Map[K, V]) Set(key K, value V) {
-	m.data.Store(key, value)
+	m.mut.Lock()
+	defer m.mut.Unlock()
+	m.data[key] = value
 }
 
 // Get selecte data
 func (m *Map[K, V]) Get(key K) (V, error) {
 
-	v, ok := m.data.Load(key)
+	m.mut.Lock()
+	defer m.mut.Unlock()
+
+	v, ok := m.data[key]
 	if !ok {
-		return v.(V), fmt.Errorf("%v not found\n", key)
+		return v, fmt.Errorf("%v not found\n", key)
 	}
-	return v.(V), nil
+	return v, nil
 }
 
 // Delete remove data by key
 func (m *Map[K, V]) Delete(key K) {
-	m.data.Delete(key)
+	m.mut.Lock()
+	defer m.mut.Unlock()
+	delete(m.data, key)
 }
 
 // HasKey inspect key is exist
 func (m *Map[K, V]) HasKey(key K) bool {
-	_, ok := m.data.Load(key)
+	m.mut.Lock()
+	defer m.mut.Unlock()
+	_, ok := m.data[key]
 	return ok
 }

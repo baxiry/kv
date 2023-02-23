@@ -11,6 +11,7 @@ func Test_runAll(t *testing.T) {
 	fmt.Println("================= sync mod ===================")
 
 	intmap := New[int, int]()
+	fmt.Println(intmap)
 	intmap.Set(1, 123)
 	intval, _ := intmap.Get(1)
 	if intval != 123 {
