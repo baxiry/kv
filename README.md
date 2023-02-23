@@ -19,7 +19,7 @@ func main() {
       imap := kv.New[int, int]()
 
       imap.Set(1, 111) // insert
-      imap.Set(1, 555) // update
+      imap.Set(1, 123) // update
 
       imap.Set(2, 222)
 
