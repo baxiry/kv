@@ -38,7 +38,7 @@ func Test_runAll(t *testing.T) {
 	fmt.Println("=============== concurrent mod ==============")
 }
 
-var m = new(Map[int, int])
+var m = New[int, int]()
 
 // testing Set and HasKey function in parallel
 func Test_Set_HasKey(t *testing.T) {
