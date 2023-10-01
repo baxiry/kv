@@ -12,9 +12,9 @@ func main() {
 	intmap.Set(1, 123)
 
 	fmt.Println(intmap.Get(1))
-	test, err := intmap.Get(234)
-	if err != nil {
-		fmt.Println(err)
+	test, ok := intmap.Get(234)
+	if !ok {
+		fmt.Println(234, "not found")
 	}
 
 	fmt.Println(test)

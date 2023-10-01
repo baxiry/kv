@@ -1,7 +1,6 @@
 package kv
 
 import (
-	"fmt"
 	"sync"
 )
 
@@ -13,28 +12,24 @@ type Map[K comparable, V any] struct {
 // New initialaze new map
 func New[K comparable, V any]() *Map[K, V] {
 	return &Map[K, V]{
-		data: make(map[K]V, 0),
+		data: make(map[K]V, 1),
 	}
 }
 
 // Set inserts new or update old value
 func (m *Map[K, V]) Set(key K, value V) {
 	m.mut.Lock()
-	defer m.mut.Unlock()
 	m.data[key] = value
+	m.mut.Unlock()
 }
 
 // Get selecte data
-func (m *Map[K, V]) Get(key K) (V, error) {
+func (m *Map[K, V]) Get(key K) (V, bool) {
 
 	m.mut.Lock()
 	defer m.mut.Unlock()
-
 	v, ok := m.data[key]
-	if !ok {
-		return v, fmt.Errorf("%v not found\n", key)
-	}
-	return v, nil
+	return v, ok
 }
 
 // Delete remove data by key

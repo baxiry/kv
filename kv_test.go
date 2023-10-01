@@ -61,9 +61,9 @@ func Test_Get(t *testing.T) {
 
 	for i := 0; i < 1000000; i++ {
 		time.Sleep(time.Nanosecond * 1)
-		val, err := m.Get(i)
-		if err != nil {
-			t.Error(err)
+		val, ok := m.Get(i)
+		if !ok {
+			t.Error("not found value")
 			return
 		}
 		if val != i*2 {
@@ -93,9 +93,9 @@ func Test_Delete(t *testing.T) {
 // bechmark
 func Bench_Set(t *testing.B) {}
 
-func Bench_Get(t *testing.T) {}
+func Bench_Get(t *testing.B) {}
 
-func Bench_Delete(t *testing.T) {}
+func Bench_Delete(t *testing.B) {}
 
-func Bench_HasKey(t *testing.T) {}
+func Bench_HasKey(t *testing.B) {}
 */
