@@ -23,8 +23,8 @@ func main() {
 
       imap.Set(2, 222)
 
-      val, err := imap.Get(1) //  123
-      val, err = imap.Get(10) //  not found error
+      val, ok := imap.Get(1) //  123 , treu
+      val, ok = imap.Get(10) //  0, false (key not exist)
  
       ok := imap.HasKey(2) //  true
       ok = imap.HasKey(20) //  false
