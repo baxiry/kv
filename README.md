@@ -4,7 +4,7 @@
 
 ## install:
 ```
-go get github.com/bashery/kv 
+go get github.com/baxiry/kv 
 ```
 
 ## usage:
